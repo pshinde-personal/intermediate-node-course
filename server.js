@@ -1,3 +1,5 @@
+/*jshint -W033 */
+
 const express= require('express');
 const mongoose= require('mongoose');
 const bodyParser= require('body-parser');
@@ -8,7 +10,7 @@ app.use(bodyParser.json());
 
 app.listen(port, ()=>{
 	console.log(`server is listening on port:${port}`)
-})
+});
 
 // CREATE
 app.post('/users',(req,res)=>{
@@ -28,3 +30,7 @@ app.route('/users/:id')
 .delete((req,res)=>{
   // User.findByIdAndDelete()
 })
+
+
+const User=require('./models/User');
+mongoose.connect('mongodb://localhost/userData')
