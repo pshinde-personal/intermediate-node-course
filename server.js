@@ -6,6 +6,9 @@ const bodyParser= require('body-parser');
 const port=8000;
 const app= express();
 
+const jwt = require('jsonwebtoken');
+
+
 const User=require('./models/User');
 mongoose.connect('mongodb://localhost/userData')
 
@@ -87,5 +90,67 @@ function sendResponse(res,err,data){
       success: true,
       data: data
     })
+  }
+}
+
+
+app.get('/jwt/hello',(req, res)=>{
+  res.json({
+    message: "Hello There!"
+  })
+})
+
+
+app.post('/jwt/posts', verifyToken, (req, res)=>{
+
+  jwt.verify(req.token, 'this is secret key', (err, authData)=>{
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      res.json({
+        success: true,
+        message: "Posted Successfully!",
+        data: authData
+      })
+    }
+  })
+})
+
+
+app.post('/jwt/registration', (req, res)=>{
+  const USER = {
+    id: 1,
+    name: 'Pratik',
+    age: 23
+  }
+  jwt.sign(USER, 'this is secret key', (err, token)=>{
+    if(err){
+      res.json({
+        success: false,
+        message: err
+      })
+    }
+    else {
+      res.json({
+        success: true,
+        message: token,
+        detail: 'save this to use it in the Authentication!'
+      })
+    }
+  })
+})
+
+function verifyToken(req, res, next){
+  const BearerHeader = req.headers.authorization;
+
+  if (typeof BearerHeader !== 'undefined') {
+    const bearer = BearerHeader.split(' ');
+    const bearerToken = bearer[1]
+    req.token = bearerToken
+
+    next()
+  }
+  else {
+    res.sendStatus(403)
   }
 }
