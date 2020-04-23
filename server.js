@@ -11,17 +11,27 @@ mongoose.connect('mongodb://localhost/userData')
 
 app.use(bodyParser.json());
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+
 app.listen(port, ()=>{
 	console.log(`server is listening on port:${port}`)
 });
 
 // CREATE
 app.post('/users',(req,res)=>{
-  User.create(
-    {...req.body.newData},
-    (err,data)=>{
-      sendResponse(res,err,data)
-  })
+  
+  bcrypt.hash(req.body.newData.password, saltRounds, function(err, hash) {
+    User.create(
+      {...req.body.newData,
+      password: hash
+      },
+      (err,data)=>{
+        sendResponse(res,err,data)
+    })
+  });
+  
 })
 
 app.route('/users/:id')
@@ -34,16 +44,21 @@ app.route('/users/:id')
 
 // UPDATE
 .put((req,res)=>{
-  User.findByIdAndUpdate(
-    req.params.id,
-    {...req.body.newData},
-    {
-      new:true
-    },
-    (err,data)=>{
-      sendResponse(res,err,data)
-    }
-  )
+
+  bcrypt.hash(req.body.newData.password, saltRounds, function(err, hash) {
+    User.findByIdAndUpdate(
+      req.params.id,
+      {...req.body.newData,
+      password: hash},
+      {
+        new:true
+      },
+      (err,data)=>{
+        sendResponse(res,err,data)
+      }
+    )
+  
+    })
 })
 // DELETE
 .delete((req,res)=>{
