@@ -18,19 +18,9 @@ app.listen(port, ()=>{
 // CREATE
 app.post('/users',(req,res)=>{
   User.create(
-    {
-      name:req.body.newData.name,
-      email:req.body.newData.email,
-      password:req.body.newData.password
-    },
+    {...req.body.newData},
     (err,data)=>{
-    if (err){
-      res.json({success: false,message: err})
-    } else if (!data){
-      res.json({success: false,message: "Not Found"})
-    } else {
-      res.json({success: true,data: data})
-    }
+      sendResponse(res,err,data)
   })
 })
 
@@ -38,22 +28,7 @@ app.route('/users/:id')
 // READ
 .get((req,res)=>{
   User.findById(req.params.id,(err,data)=>{
-    if (err){
-      res.json({
-        success: false,
-        message: err
-      })
-    } else if (!data){
-      res.json({
-        success: false,
-        message: "Not Found"
-      })
-    } else {
-      res.json({
-        success: true,
-        data: data
-      })
-    }
+    sendResponse(res,err,data)
   })
 })
 
@@ -61,31 +36,12 @@ app.route('/users/:id')
 .put((req,res)=>{
   User.findByIdAndUpdate(
     req.params.id,
-    {
-      name:req.body.newData.name,
-      email:req.body.newData.email,
-      password:req.body.newData.password
-    },
+    {...req.body.newData},
     {
       new:true
     },
     (err,data)=>{
-      if (err){
-        res.json({
-          success: false,
-          message: err
-        })
-      } else if (!data){
-        res.json({
-          success: false,
-          message: "Not Found"
-        })
-      } else {
-        res.json({
-          success: true,
-          data: data
-        })
-      }
+      sendResponse(res,err,data)
     }
   )
 })
@@ -94,24 +50,27 @@ app.route('/users/:id')
   User.findByIdAndDelete(
     req.params.id,
     (err,data)=>{
-      if (err){
-        res.json({
-          success: false,
-          message: err
-        })
-      } else if (!data){
-        res.json({
-          success: false,
-          message: "Not Found"
-        })
-      } else {
-        res.json({
-          success: true,
-          data: data
-        })
-      }
+      sendResponse(res,err,data)
     }
   )
 })
 
 
+function sendResponse(res,err,data){
+  if (err){
+    res.json({
+      success: false,
+      message: err
+    })
+  } else if (!data){
+    res.json({
+      success: false,
+      message: "Not Found"
+    })
+  } else {
+    res.json({
+      success: true,
+      data: data
+    })
+  }
+}
