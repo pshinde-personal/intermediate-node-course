@@ -9,7 +9,7 @@ const app= express();
 const jwt = require('jsonwebtoken');
 
 
-const User=require('./models/User');
+const User=require('./src/models/User');
 mongoose.connect('mongodb://localhost/userData')
 
 app.use(bodyParser.json());
