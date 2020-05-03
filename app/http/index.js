@@ -8,8 +8,8 @@ routes.get('/', (req, res) => {
     res.status(200).json({ message: 'Connected! to root http' });
 });
 
-routes.use('/users', users)
 routes.use('/blogs', blogs)
+routes.use('/users', users)
 
 
 routes.use('/*', (req, res)=> {

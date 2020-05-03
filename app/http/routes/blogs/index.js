@@ -1,9 +1,14 @@
 /*jshint -W033 */
 const blogs = require('express').Router();
+const allBlogs = require('./allBlogs');
+const addBlog = require('./addBlog')
 
-blogs.get('/', (req, res) => {
-    res.status(200).json({ message: 'Connected to blogs!' });
-});
+const bodyParser= require('body-parser');
+blogs.use(bodyParser.json());
+
+
+blogs.get('/', allBlogs);
+blogs.post('/', addBlog);
 
 
 module.exports = blogs;
