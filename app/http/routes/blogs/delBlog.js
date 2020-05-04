@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const User = require('../../../models/User');
-mongoose.connect('mongodb://localhost/userData');
+const Blog = require('../../../models/Blog');
+mongoose.connect('mongodb://localhost/blogs');
 
 module.exports = (req, res) => {
-
-    const userId = req.params.userId;
-    User.findById(userId, (err, data)=>{
+    
+    const blogId = req.params.blogId;
+    Blog.findByIdAndDelete( blogId, (err, data)=>{
         if(err){
             res.status(500).json({ 
                 'success' : false,
@@ -21,7 +21,8 @@ module.exports = (req, res) => {
         else {
             res.status(200).json({ 
                 success: true,
-                message : data });
+                data : data,
+                message: "Deleted Successfully"});
         }
     });
 

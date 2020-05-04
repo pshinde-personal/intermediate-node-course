@@ -5,7 +5,7 @@ const blogs = require('./routes/blogs')
 
 
 routes.get('/', (req, res) => {
-    res.status(200).json({ message: 'Connected! to root http' });
+    res.status(200).json({ message: 'Connected to root http!' });
 });
 
 routes.use('/blogs', blogs)
