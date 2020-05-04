@@ -9,8 +9,8 @@ module.exports = (req, res) => {
     User.findById(userId, (err, data)=>{
         if(err){
             res.status(500).json({ 
-                'success' : false,
-                'message' : err
+                success : false,
+                message : err
             });
         } 
         else if(!data){

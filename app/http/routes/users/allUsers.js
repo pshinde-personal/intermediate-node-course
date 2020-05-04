@@ -10,8 +10,8 @@ module.exports = (req, res) => {
     User.find((err, data)=>{
         if(err){
             res.status(500).json({ 
-                'success' : false,
-                'message' : err
+                success : false,
+                message : err
             });
         } 
         else if(!data){
@@ -23,7 +23,7 @@ module.exports = (req, res) => {
             res.status(200).json({ 
                 success: true,
                 message : data });
+            res.end()
         }
     })
-    
 };
