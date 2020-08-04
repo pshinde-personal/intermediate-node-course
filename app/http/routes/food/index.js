@@ -1,25 +1,23 @@
-
-const foodItem = require('express').Router();
+const foodModule = require('express').Router();
+const foodItems = require('./getAllFoodItems');
+const foodItem = require('./getFood');
+const delFood = require('./delFood');
+const addFood = require('./addFoodItem');
+const updateFood = require('./updateFoodItem');
 
 const bodyParser= require('body-parser');
-foodItem.use(bodyParser.json());
-const { Client } = require('pg');
+foodModule.use(bodyParser.json());
 
-var connectionString = "postgres://postgres:postgres@localhost:5432/omnifood";
+// all items
+foodModule.get('/', foodItems);
+// insert item
+foodModule.post('/', addFood);
+// find item by id
+foodModule.get('/:id', foodItem);
+// update item
+foodModule.put('/:id', updateFood);
+// delete item by id
+foodModule.delete('/:id', delFood);
 
-const client = new Client({
-    connectionString: connectionString
-});
 
-client.connect();
-
-foodItem.get('/', function (req, res) {
-  client.query('SELECT * FROM food_item', [1], function (err, result) {
-      if (err) {
-          console.log(err);
-          res.status(400).send(err);
-      }
-      res.status(200).send(result.rows);
-  });
-});
-
+module.exports = foodModule;
