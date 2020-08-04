@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Blog = require('../../../models/Blog');
-mongoose.connect('mongodb://localhost/blogs');
+// mongoose.connect('mongodb://localhost/blogs');
 
 module.exports = (req, res) => {
 
@@ -19,7 +19,7 @@ module.exports = (req, res) => {
     //     else if(!data){
     //         res.status(404).json({
     //             success : false,
-    //             message :  'not Found'});
+    //          message :  'not Found'});
     //     }
     //     else {
     //         res.status(200).json({ 
