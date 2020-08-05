@@ -1,6 +1,8 @@
 // Bring in our dependencies
-const app = require('express')();
+const express = require('express');
 const routes = require('./app/http');
+
+var app = express();
 
 //  Connect all our routes to our application
 app.use('/', routes);
