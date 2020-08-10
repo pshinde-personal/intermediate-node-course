@@ -21,7 +21,7 @@ function sendResponse(res,err,data){
     } else {
         res.json({
         success: true,
-        data: data
+        message: data
         })
     }
 }
@@ -29,8 +29,9 @@ function sendResponse(res,err,data){
 module.exports = (req, res) => {
     bcrypt.hash(req.body.newUser.password, saltRounds, function(err, hash) {
         User.create(
-        {...req.body.newUser,
-        password: hash
+        {
+            ...req.body.newUser,
+            password: hash
         },
         (err,data)=>{
             sendResponse(res,err,data);

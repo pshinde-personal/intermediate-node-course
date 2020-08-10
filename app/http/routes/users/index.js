@@ -11,13 +11,14 @@ const bodyParser= require('body-parser');
 users.use(bodyParser.json());
 
 
+//   coming from :  localhost:8000/users/
 
 // Routes
 
 users.get('/', allUsers);
 users.get('/:userId', user);
 
-users.post('/', addUser);
+users.post('/', addUser); 
 users.delete('/:userId', delUser)
 users.put('/:userId', putUser)
 
