@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Blog = require('../../../models/Blog');
-mongoose.connect('mongodb://localhost/blogs');
+mongoose.connect('mongodb://localhost/blog-post');
 
 
 function sendResponse(res,err,data){

@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const User = require('../../../models/User');
-mongoose.connect('mongodb://localhost/userData');
+mongoose.connect('mongodb://localhost/blog-post');
 
 
 function sendResponse(res,err,data){
