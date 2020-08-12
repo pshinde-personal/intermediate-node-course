@@ -10,18 +10,18 @@ mongoose.connect('mongodb://localhost/blog-post');
 function sendResponse(res,err,data){
     if (err){
         res.json({
-        success: false,
-        message: err
+            success: false,
+            message: err
         })
     } else if (!data){
         res.json({
-        success: false,
-        message: "Not Found"
+            success: false,
+            message: "Not Found"
         })
     } else {
         res.json({
-        success: true,
-        message: data
+            success: true,
+            message: data
         })
     }
 }

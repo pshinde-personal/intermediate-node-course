@@ -5,7 +5,7 @@ const addUser = require('./addUser')
 const user = require('./user')
 const delUser = require('./delUser')
 const putUser = require('./putUser')
-
+const getUserId = require('./getUserId');
 
 const bodyParser= require('body-parser');
 users.use(bodyParser.json());
@@ -22,4 +22,5 @@ users.post('/', addUser);
 users.delete('/:userId', delUser)
 users.put('/:userId', putUser)
 
+users.post('/getUserId', getUserId)
 module.exports = users;
