@@ -8,17 +8,20 @@ function sendResponse(res,err,data){
     if (err){
         res.json({
         success: false,
-        message: err
+        message: null,
+        error: err
         });
     } else if (!data){
         res.json({
         success: false,
-        message: "Not Found"
+        message: null,
+        error: "Not Found"
         });
     } else {
         res.json({
         success: true,
-        message: 'changes are made successfully!'
+        message: "changes made successfully",
+        error: null 
         });
     }
 }
@@ -26,11 +29,11 @@ function sendResponse(res,err,data){
 
 module.exports = (req, res) => {
     const blogId = req.params.blogId;
-    Blog.findByIdAndUpdate( blogId, 
+    Blog.findOneAndUpdate( blogId, 
     {
         ...req.body.newBlog
     },
-    (res, err,data)=>{
+    (err, data)=>{
         sendResponse(res,err,data);
     });
 };

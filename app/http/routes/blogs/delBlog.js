@@ -10,19 +10,23 @@ module.exports = (req, res) => {
         if(err){
             res.status(500).json({ 
                 'success' : false,
-                'message' : err
+                'message' : null,
+                'error': err
             });
         } 
         else if(!data){
             res.status(404).json({
-                success : false,
-                message :  'not Found'});
+                'success' : false,
+                'message': null,
+                'error' :  'not Found'
+            });
         }
         else {
             res.status(200).json({ 
-                success: true,
-                data : data,
-                message: "Deleted Successfully"});
+                'success': true,
+                'message' : data,
+                'error': null
+            });
         }
     });
 

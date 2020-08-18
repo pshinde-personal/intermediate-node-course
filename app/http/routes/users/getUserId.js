@@ -6,21 +6,24 @@ const User = require('../../../models/User');
 mongoose.connect('mongodb://localhost/blog-post');
 
 module.exports = (req, res) => {
-
-    const {email, password} = req.body.user;
+	if(req.body.user!=='undefined')
+    		{
+    		const {email, password} = req.body.user;
     console.log(req.body.user);
 
     User.findOne({email: email}, (err, data)=> {
       if(err) {
         res.json({
           success: false,
-            message: err
+          message: null,
+            error: err
         }) 
       }
       else if(!data) {
         res.json({
           success: false,
-          message: "incorrect email or password!"
+          message: null,
+          error: "incorrect email or password!"
         })
       } 
       else {
@@ -28,13 +31,17 @@ module.exports = (req, res) => {
           result
             ? res.json({
                 success: true,
-                message: data
+                message: data,
+                error: null
               })
             : res.json({
               success: false,
-              message: "incorrect password"
+              message: null,
+              error: "incorrect password"
             })
         })
       }
     })
+    }
+    else res.sendStatus(401)
 };
